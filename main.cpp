@@ -7,14 +7,18 @@
 #include "./src/Node.hpp"
 #include "./include/BinaryTree.hpp"
 #include "./src/BalancedBinaryTree.hpp"
+#include "./src/SearchBinaryTree.hpp"
+
 
 void printHelp();
-void startProgram();
-char askOption();
-void insertKey(BinaryTree<int>* tree);
-void findKey(BinaryTree<int>* tree);
-void traverseTree(BinaryTree<int>* tree);
-
+char askTreeType();
+void startProgram(char option);
+void balancedBinaryTreeMenu();
+void searchBinaryTreeMenu();
+char askOptionBalancedBinaryTree();
+char askOptionSearchBinaryTree();
+void insertKey(BinaryTree<int>* &tree);
+void findKey(BinaryTree<int>* &tree);
 
 int main(int argc, char** argv) {
   if (argc == 2 && strcmp(argv[1], "--help")==0) {
@@ -23,30 +27,58 @@ int main(int argc, char** argv) {
   if (argc != 1) {
     std::cout << "\t Try ./binary-trees --help for more information."<< std::endl;
   } else {
-    startProgram();
+    char t = askTreeType();
+    startProgram(t);
   }
   exit(1);
   return 0;
 }
 
-void startProgram(){
-  BinaryTree<int>* tree = new BalancedBinaryTree<int>;
+char askTreeType(){
+  char option;
+  std::cout << "\t Please enter a value between 0 - 2. Otherwise program will shutdown:"<< std::endl;
+  std::cout << "\t\t [0].- Exit the program."<< std::endl;
+  std::cout << "\t\t [1].- Balanced Binary Tree."<< std::endl;
+  std::cout << "\t\t [2].- Binary Search Tree."<< std::endl;
+  std::cin >> option;
+  return option;
+}
+
+void startProgram(char option){
+  switch(option){
+    case '1':
+      balancedBinaryTreeMenu();
+      break;
+    case '2':
+      searchBinaryTreeMenu();
+      break;
+    default:
+      std::cout << "Exiting program!" << std::endl;
+      exit(0);
+      break;
+  }
+}
+
+void balancedBinaryTreeMenu(){
+
   int rootValue;
-  std::cout << tree;
+  BinaryTree<int>* tree = new BalancedBinaryTree<int>;
+
+  std::cout << *tree << std::endl;
   std::cout << "\t Enter a value to insert as root.."<< std::endl;
   std::cin >> rootValue;
-  BNode<int>* node;
-  node->setData(rootValue);
-  tree->setRoot(node);
-  std::cout << tree;
-  char option = askOption();
+
+  tree->insert(rootValue);
+
+  std::cout << *tree << std::endl;
+  char option = askOptionBalancedBinaryTree();
 
   while(option != '0') {
 
     switch(option){
       case '1':
         insertKey(tree);
-        std::cout << tree;
+        std::cout << *tree << std::endl;
         break;
 
       case '2':
@@ -54,7 +86,7 @@ void startProgram(){
         break;
 
       case '3':
-        traverseTree(tree);
+        tree->askTraversal();
         break;
 
       default:
@@ -62,24 +94,82 @@ void startProgram(){
         break;
     }
 
-    option = askOption();
+    option = askOptionBalancedBinaryTree();
 
   }
   std::cout << "\t Exiting program."<< std::endl;
 }
 
-char askOption(){
+char askOptionBalancedBinaryTree(){
   char option;
   std::cout << "\t Please enter a value between 0 - 3. Otherwise program will shutdown:"<< std::endl;
   std::cout << "\t\t [0].- Exit the program."<< std::endl;
   std::cout << "\t\t [1].- Insert Key ~ Try to add a node to the tree."<< std::endl;
-  std::cout << "\t\t [2].- Find key ~ Look for an specified key. Returns boolean."<< std::endl;
-  std::cout << "\t\t [3].- Tree traversal: inOrder."<< std::endl;
+  std::cout << "\t\t [2].- Find key ~ Look for an specified key."<< std::endl;
+  std::cout << "\t\t [3].- Tree traversal."<< std::endl;
   std::cin >> option;
   return option;
 }
 
-void insertKey(BinaryTree<int>* tree){
+void searchBinaryTreeMenu(){
+  
+  int rootValue;
+  BinaryTree<int>* tree = new SearchBinaryTree<int>;
+  std::cout << *tree << std::endl;
+  std::cout << "\t Enter a value to insert as root.."<< std::endl;
+  std::cin >> rootValue;
+  tree->insert(rootValue);
+  std::cout << *tree << std::endl;
+  char option = askOptionSearchBinaryTree();
+
+  while(option != '0') {
+
+    switch(option){
+      case '1':
+        insertKey(tree);
+        std::cout << *tree << std::endl;
+        break;
+
+      case '2':
+        findKey(tree);
+        break;
+
+      case '3':
+        int value;
+        std::cout << "\t Enter a value to delete as key.."<< std::endl;
+        std::cin >> value;
+        tree->erase(value);
+        break;
+
+      case '4':
+        tree->askTraversal();
+        break;
+
+      default:
+        std::cout << "Invalid option" << std::endl;
+        exit(0);
+        break;
+    }
+
+    option = askOptionSearchBinaryTree();
+
+  }
+  std::cout << "\t Exiting program."<< std::endl;
+}
+
+char askOptionSearchBinaryTree(){
+  char option;
+  std::cout << "\t Please enter a value between 0 - 3. Otherwise program will shutdown:"<< std::endl;
+  std::cout << "\t\t [0].- Exit the program."<< std::endl;
+  std::cout << "\t\t [1].- Insert Key ~ Try to add a node to the tree."<< std::endl;
+  std::cout << "\t\t [2].- Find key ~ Look for an specified key."<< std::endl;
+  std::cout << "\t\t [3].- Delete Key"<< std::endl;
+  std::cout << "\t\t [4].- Tree traversal."<< std::endl;
+  std::cin >> option;
+  return option;
+}
+
+void insertKey(BinaryTree<int>* &tree){
   int value = 0;
   std::cout << "Enter a key to insert:"<< std::endl;
   std::cin >> value;
@@ -90,7 +180,7 @@ void insertKey(BinaryTree<int>* tree){
   std::cout << "Succes!" << std::endl;
 }
 
-void findKey(BinaryTree<int>* tree){
+void findKey(BinaryTree<int>* &tree){
   int value = 0;
   std::cout << "Enter a key to search:"<< std::endl;
   std::cin >> value;
@@ -101,8 +191,6 @@ void findKey(BinaryTree<int>* tree){
   std::cout << "Key found!"<< std::endl;
 
 }
-
-void traverseTree(BinaryTree<int>* tree){ tree->inorder(); }
 
 void printHelp() {
     std::cout << "This is an implementation of a simple {forced} balanced binary tree"<< std::endl;
