@@ -2,6 +2,7 @@ CC=g++
 CFLAGS=-I.
 DEPS = ../include/BinaryTree.hpp \
 			 ../src/BalancedBinaryTree.hpp \
+			 ../src/SearchBinaryTree.hpp \
 			 ../src/Node.hpp \
 			 ../main.cpp
 
