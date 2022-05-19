@@ -71,7 +71,7 @@ template<class Key> class BinaryTree{
   //Tree traversal
   void  preorder(BNode<Key>* &node) const{
     if (node == nullptr){
-      std::cout << "[.]";
+      //std::cout << "[.]";
       return;
     }
     std::cout << "[" << node->getData() << "]";
@@ -81,7 +81,7 @@ template<class Key> class BinaryTree{
 
   void  inorder(BNode<Key>* &node) const{
     if (node == nullptr){
-      std::cout << "[.]";
+      //std::cout << "[.]";
       return;
     }
     inorder(node->getLeftChild());
@@ -92,7 +92,7 @@ template<class Key> class BinaryTree{
 
   void  postorder(BNode<Key>* &node) const{
     if (node == nullptr){
-      std::cout << "[.]";
+      //std::cout << "[.]";
       return;
     }
     postorder(node->getLeftChild());
