@@ -1,5 +1,5 @@
-#ifndef _BALANCEDBINARYTREEHPP_
-#define _BALANCEDBINARYTREEHPP_
+#ifndef _BINARYBALANCEDTREEHPP_
+#define _BINARYBALANCEDTREEHPP_
 
 #include "../include/BinaryTree.hpp"
 #include "./Node.hpp"  
@@ -7,12 +7,12 @@
 #include <iostream>
 
 template<class Key>
-class BalancedBinaryTree : public BinaryTree<Key>{
+class BinaryBalancedTree : public BinaryTree<Key>{
 
  public:
-  BalancedBinaryTree(){}
+  BinaryBalancedTree(){}
 
-  BalancedBinaryTree(const Key& k) { BinaryTree<Key>::getRoot() = addNode(k); }
+  BinaryBalancedTree(const Key& k) { BinaryTree<Key>::getRoot() = addNode(k); }
 
   bool insert(const Key& k){
     if (BinaryTree<Key>::getRoot() == nullptr){
@@ -81,4 +81,4 @@ class BalancedBinaryTree : public BinaryTree<Key>{
 
 };
 
-#endif /* _BALANCEDBINARYTREEHPP_ */
+#endif /* _BINARYBALANCEDTREEHPP_ */

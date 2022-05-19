@@ -1,5 +1,5 @@
-#ifndef _SEARCHBINARYTREEHPP_
-#define _SEARCHBINARYTREEHPP_
+#ifndef _BINARYSEARCHTREEHPP_
+#define _BINARYSEARCHTREEHPP_
 
 #include "../include/BinaryTree.hpp"
 #include "./Node.hpp"  
@@ -7,10 +7,10 @@
 #include <iostream>
 
 template<class Key>
-class SearchBinaryTree : public BinaryTree<Key>{
+class BinarySearchTree : public BinaryTree<Key>{
  public:
-  SearchBinaryTree(){}
-  SearchBinaryTree(const Key& k){ BinaryTree<Key>::getRoot() = addNode(k);}
+  BinarySearchTree(){}
+  BinarySearchTree(const Key& k){ BinaryTree<Key>::getRoot() = addNode(k);}
 
   bool insert(const Key& k) {
     if (search(k)) return false;
@@ -88,4 +88,4 @@ class SearchBinaryTree : public BinaryTree<Key>{
 
 };
 
-#endif /* _SEARCHBINARYTREEHPP_ */
+#endif /* _BINARYSEARCHTREEHPP_ */
